@@ -63,6 +63,7 @@ function create() {
 
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
+	//make it so that the player is collidable with our platforms
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0.2;
@@ -79,6 +80,7 @@ function update() {
 
     //  Collide the player and the mice with the platforms
     game.physics.arcade.collide(player, platforms);
+	//checks for anything conditional
 
 }
 

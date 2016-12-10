@@ -1,20 +1,18 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
     <title>Phaser - Making your first game</title>
-    <script type="text/javascript" src="js/phaser.min.js"></script>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
     <style type="text/css">
         body {
             margin: 0;
         }
     </style>
 </head>
-
 <body>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -27,6 +25,7 @@ function preload() {
 
 }
 
+var player;
 var platforms;
 
 function create() {
@@ -61,30 +60,31 @@ function create() {
 
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'rick');
-	//this adds our player at 32 pixels and drops him into the game
-	//height-150 so he falls
 
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
-	//so he doesn't floar
+	//make it so that the player is collidable with our platforms
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;//doesn't fly vertically into space
+    player.body.gravity.y = 300;
     player.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
     player.animations.add('left', [0, 1], 5, true);
-	player.animations.add('right', [3, 4], 5, true);
-//adding the left and right animations to it
-//not walking yet but sets up for player controls
+	player.animations.add('right', [4, 5], 5, true);
+    
 }
 
 function update() {
+
+    //  Collide the player and the mice with the platforms
+    game.physics.arcade.collide(player, platforms);
+	//checks for anything conditional
+
 }
 
 </script>
 
 </body>
-
 </html>
