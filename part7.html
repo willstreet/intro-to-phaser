@@ -76,7 +76,7 @@ function create() {
 
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
-    
+    //enabling just up down left right
 }
 
 function update() {
@@ -114,7 +114,8 @@ function update() {
     {
         player.body.velocity.y = -350;
     }
-
+//make sure that you are pushing up and he is touching something
+//this is so you don't keep on pushing up into space
 }
 </script>
 
