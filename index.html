@@ -1,18 +1,20 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
-	<meta charset="UTF-8" />
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
     <title>Phaser - Making your first game</title>
-	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
     <style type="text/css">
         body {
             margin: 0;
         }
     </style>
 </head>
+
 <body>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -22,15 +24,17 @@ function preload() {
     game.load.image('ground', 'assets/platform.png');
     game.load.image('mouse', 'assets/mouse.png');
     game.load.spritesheet('rick', 'assets/rick-sprite.png', 76, 44, 5);
-
 }
 
 var player;
 var platforms;
 var cursors;
 
-function create() {
+var mice;
 
+function create() {
+//giving our cat something to catch
+//if the cat interacts with the sprites, they will disappear
     //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -74,16 +78,40 @@ function create() {
     player.animations.add('left', [0, 1], 5, true);
 	player.animations.add('right', [4, 5], 5, true);
 
+    //  Finally some stars to collect
+    mice = game.add.group();
+
+    //  We will enable physics for any mice that is created in this group
+    mice.enableBody = true;
+
+    //  Here we'll create 12 of them evenly spaced apart
+    for (var i = 0; i < 12; i++)
+    {
+        //  Create a mice inside of the 'mouse' group
+        var mouse = mice.create(i * 70, 0, 'mouse');//70 pixels apart, starting at 0 Y
+
+        //  Let gravity do its thing
+        mouse.body.gravity.y = 300;
+
+        //  This just gives each mouse a slightly random bounce value
+        mouse.body.bounce.y = 0.7 + Math.random() * 0.2;
+    }
+
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
-    //enabling just up down left right
+    
 }
 
 function update() {
 
     //  Collide the player and the mice with the platforms
     game.physics.arcade.collide(player, platforms);
+    game.physics.arcade.collide(mice, platforms);
 
+    //  Checks to see if the player overlaps with any of the mice, if he does call the collectMouse function
+    game.physics.arcade.overlap(player, mice, collectMouse, null, this);
+//if the player and one of the mice are overlapping
+	
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
 
@@ -114,10 +142,18 @@ function update() {
     {
         player.body.velocity.y = -350;
     }
-//make sure that you are pushing up and he is touching something
-//this is so you don't keep on pushing up into space
+
 }
+
+function collectMouse (player, mouse) {
+    
+    // Removes the mouse from the screen
+    mouse.kill();
+
+}
+
 </script>
 
 </body>
+
 </html>

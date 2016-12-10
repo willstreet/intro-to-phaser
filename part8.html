@@ -33,7 +33,8 @@ var cursors;
 var mice;
 
 function create() {
-
+//giving our cat something to catch
+//if the cat interacts with the sprites, they will disappear
     //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -80,14 +81,14 @@ function create() {
     //  Finally some stars to collect
     mice = game.add.group();
 
-    //  We will enable physics for any star that is created in this group
+    //  We will enable physics for any mice that is created in this group
     mice.enableBody = true;
 
     //  Here we'll create 12 of them evenly spaced apart
     for (var i = 0; i < 12; i++)
     {
         //  Create a mice inside of the 'mouse' group
-        var mouse = mice.create(i * 70, 0, 'mouse');
+        var mouse = mice.create(i * 70, 0, 'mouse');//70 pixels apart, starting at 0 Y
 
         //  Let gravity do its thing
         mouse.body.gravity.y = 300;
@@ -109,7 +110,8 @@ function update() {
 
     //  Checks to see if the player overlaps with any of the mice, if he does call the collectMouse function
     game.physics.arcade.overlap(player, mice, collectMouse, null, this);
-
+//if the player and one of the mice are overlapping
+	
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
 
