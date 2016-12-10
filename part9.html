@@ -31,7 +31,7 @@ var cursors;
 
 var mice;
 var score = 0;
-var scoreText;
+var scoreText;//adding the score text
 
 function create() {
 
@@ -99,7 +99,7 @@ function create() {
 
     //  The score
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-
+//redefining the var scoretext and X, Y, says score is zero
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
     
@@ -155,7 +155,7 @@ function collectMouse (player, mouse) {
     //  Add and update the score
     score += 10;
     scoreText.text = 'Score: ' + score;
-
+//adding 10 to the score and update the score text
 }
 
 </script>
